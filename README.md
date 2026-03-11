@@ -5,7 +5,7 @@
 Install the skill with:
 
 ```bash
-npx skills add GologinLabs/gologin-local-agent-browser-skill@gologin-local-agent-browser-skill
+npx skills add GologinLabs/gologin-local-agent-browser-skill
 ```
 
 Standalone repo:
