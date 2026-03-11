@@ -24,6 +24,13 @@ npm run build
 node ./dist/cli.js <command> ...
 ```
 
+## Blocking Preflight
+
+- Before any runtime command, confirm that `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` is available.
+- If the token is missing, stop and ask the user for it.
+- Do not probe `profiles`, `sessions`, `current`, daemon state, local config files, Orbita paths, or CLI `--help` as a workaround for a missing token.
+- `GOLOGIN_PROFILE_ID` is optional. Only after a token exists may the skill list profiles, inspect registry state, or create/import a profile.
+
 ## Environment
 
 - `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN`: required

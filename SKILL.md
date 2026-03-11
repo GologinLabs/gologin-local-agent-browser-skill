@@ -11,6 +11,10 @@ Use the `gologin-local-agent-browser` CLI as the single interface for local GoLo
 
 ## Core Rules
 
+- `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` is mandatory for any runtime action through this skill.
+- Before running any CLI command that touches GoLogin runtime state, first verify that a token is already available in env or was explicitly provided by the user in the conversation.
+- If the token is missing, stop immediately and ask the user for it. Do not try to "work around" the missing token.
+- Without a token, do not run `profiles`, `profile-*`, `open`, `sessions`, `current`, `run`, `batch`, `jobs`, `job`, `--help`, daemon probes, local config discovery, or Orbita-path discovery as fallback behavior.
 - Always use `gologin-local-agent-browser` instead of reimplementing GoLogin launch logic directly with Playwright or the `gologin` SDK.
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
 - Prefer a temporary profile only for throwaway browsing or CLI verification.
@@ -52,6 +56,11 @@ Expect these environment variables:
 - `GOLOGIN_HEADLESS` for default headless mode
 - `GOLOGIN_EXECUTABLE_PATH` only if Orbita is not in the expected SDK location
 - `GOLOGIN_TMPDIR` only if profile temp data should live in a custom directory
+
+Blocking preflight:
+
+- If no GoLogin token is available, ask the user for `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` before any runtime action.
+- `GOLOGIN_PROFILE_ID` is optional. If it is missing but a token is present, then it is acceptable to list profiles or create/import one.
 
 ## Command Map
 
