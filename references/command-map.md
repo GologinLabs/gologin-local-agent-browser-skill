@@ -30,6 +30,8 @@ node ./dist/cli.js <command> ...
 - If the token is missing, stop and ask the user for it.
 - Do not probe `profiles`, `sessions`, `current`, daemon state, local config files, Orbita paths, or CLI `--help` as a workaround for a missing token.
 - `GOLOGIN_PROFILE_ID` is optional. Only after a token exists may the skill list profiles, inspect registry state, or create/import a profile.
+- If the user did not specify profile strategy, stop and ask one explicit question first: use an existing profile, or create/import a new profile.
+- Do not auto-list profiles or auto-create a profile until that choice is clear.
 
 ## Environment
 

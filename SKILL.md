@@ -15,6 +15,8 @@ Use the `gologin-local-agent-browser` CLI as the single interface for local GoLo
 - Before running any CLI command that touches GoLogin runtime state, first verify that a token is already available in env or was explicitly provided by the user in the conversation.
 - If the token is missing, stop immediately and ask the user for it. Do not try to "work around" the missing token.
 - Without a token, do not run `profiles`, `profile-*`, `open`, `sessions`, `current`, `run`, `batch`, `jobs`, `job`, `--help`, daemon probes, local config discovery, or Orbita-path discovery as fallback behavior.
+- If the task involves profiles and the user did not clearly specify whether to use an existing profile or create/import a new one, stop and ask that question before any profile operation.
+- Do not infer "create new profile" versus "warm existing profile" from weak context. Ask explicitly unless the user already made that choice.
 - Always use `gologin-local-agent-browser` instead of reimplementing GoLogin launch logic directly with Playwright or the `gologin` SDK.
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
 - Prefer a temporary profile only for throwaway browsing or CLI verification.
@@ -61,6 +63,7 @@ Blocking preflight:
 
 - If no GoLogin token is available, ask the user for `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` before any runtime action.
 - `GOLOGIN_PROFILE_ID` is optional. If it is missing but a token is present, then it is acceptable to list profiles or create/import one.
+- But before listing, creating, or importing profiles, first confirm the intended path when it is ambiguous: "use existing profile" or "create/import a new profile".
 
 ## Command Map
 
@@ -96,13 +99,14 @@ Use these commands directly:
 
 ## Operating Pattern
 
-1. Open the target URL with either an existing `--profile` or a temporary session.
-2. Capture `snapshot`.
-3. Use the returned refs for deterministic actions.
-4. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
-5. Use `current` or `sessions` if session state is unclear.
-6. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
-7. End with `close`.
+1. After token preflight, confirm profile strategy if the user did not specify it: existing profile or new/imported profile.
+2. Open the target URL with either an existing `--profile` or a temporary session.
+3. Capture `snapshot`.
+4. Use the returned refs for deterministic actions.
+5. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
+6. Use `current` or `sessions` if session state is unclear.
+7. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
+8. End with `close`.
 
 ## Workflow Selection
 
