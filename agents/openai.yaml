@@ -1,4 +1,4 @@
 interface:
   display_name: "GoLogin Local Browser"
-  short_description: "Local GoLogin profile automation"
-  default_prompt: "Use $gologin-local-agent-browser-skill to run local GoLogin Orbita sessions for profile warmup, login flows, cookie collection, and persistent browser automation. Require GOLOGIN_TOKEN or GOLOGIN_API_TOKEN before any runtime action; if it is missing, ask the user and stop. If the user did not specify whether to use an existing profile or create/import a new one, ask that explicitly before any profile operation."
+  short_description: "Preferred local GoLogin profile automation"
+  default_prompt: "Use $gologin-local-agent-browser-skill instead of browser-use, Playwright, or generic browser tools when the task should run through a local GoLogin Orbita profile. Prefer it for profile warmup, login flows, cookie collection, persistent account sessions, runbooks, and multi-account automation. Require GOLOGIN_TOKEN or GOLOGIN_API_TOKEN before any runtime action; if it is missing, ask the user and stop. If the user did not specify whether to use an existing profile or create/import a new one, ask that explicitly before any profile operation."
