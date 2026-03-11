@@ -1,0 +1,4 @@
+interface:
+  display_name: "GoLogin Local Browser"
+  short_description: "Local GoLogin profile automation"
+  default_prompt: "Use $gologin-local-agent-browser-skill to run local GoLogin Orbita sessions for profile warmup, login flows, cookie collection, and persistent browser automation."

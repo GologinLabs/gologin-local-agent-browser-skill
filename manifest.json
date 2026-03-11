@@ -1,0 +1,89 @@
+{
+  "name": "gologin-local-agent-browser-skill",
+  "description": "Local GoLogin Orbita automation skill for the gologin-local-agent-browser CLI",
+  "package": "gologin-local-agent-browser-cli",
+  "cli": "gologin-local-agent-browser",
+  "skill_repository": "https://github.com/GologinLabs/gologin-local-agent-browser-skill",
+  "repository": "https://github.com/GologinLabs/gologin-local-agent-browser",
+  "keywords": [
+    "gologin",
+    "local browser",
+    "orbita",
+    "browser automation",
+    "profile warmup",
+    "login automation",
+    "cookies",
+    "snapshot",
+    "runbook",
+    "batch",
+    "job history"
+  ],
+  "tool_groups": [
+    "sessions",
+    "automation",
+    "artifacts",
+    "profiles"
+  ],
+  "tools": [
+    {
+      "name": "local_browser_open",
+      "group": "sessions",
+      "surface": "gologin-local-agent-browser open"
+    },
+    {
+      "name": "local_browser_snapshot",
+      "group": "sessions",
+      "surface": "gologin-local-agent-browser snapshot"
+    },
+    {
+      "name": "local_browser_click",
+      "group": "sessions",
+      "surface": "gologin-local-agent-browser click"
+    },
+    {
+      "name": "local_browser_type",
+      "group": "sessions",
+      "surface": "gologin-local-agent-browser type"
+    },
+    {
+      "name": "local_browser_run",
+      "group": "automation",
+      "surface": "gologin-local-agent-browser run"
+    },
+    {
+      "name": "local_browser_batch",
+      "group": "automation",
+      "surface": "gologin-local-agent-browser batch"
+    },
+    {
+      "name": "local_browser_jobs",
+      "group": "automation",
+      "surface": "gologin-local-agent-browser jobs"
+    },
+    {
+      "name": "local_browser_job",
+      "group": "automation",
+      "surface": "gologin-local-agent-browser job"
+    },
+    {
+      "name": "local_browser_screenshot",
+      "group": "artifacts",
+      "surface": "gologin-local-agent-browser screenshot"
+    },
+    {
+      "name": "local_browser_pdf",
+      "group": "artifacts",
+      "surface": "gologin-local-agent-browser pdf"
+    },
+    {
+      "name": "local_browser_profiles",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profiles"
+    },
+    {
+      "name": "local_browser_profile_create",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profile-create"
+    }
+  ]
+}

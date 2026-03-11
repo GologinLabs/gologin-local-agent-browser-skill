@@ -1,0 +1,84 @@
+# Command Map
+
+## Preferred CLI
+
+Use the globally installed command:
+
+```bash
+gologin-local-agent-browser <command> ...
+```
+
+If it is not installed yet:
+
+```bash
+npm install -g gologin-local-agent-browser-cli
+```
+
+If you want to run from a source checkout:
+
+```bash
+git clone https://github.com/GologinLabs/gologin-local-agent-browser.git
+cd gologin-local-agent-browser
+npm install
+npm run build
+node ./dist/cli.js <command> ...
+```
+
+## Environment
+
+- `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN`: required
+- `GOLOGIN_PROFILE_ID`: optional default profile
+- `GOLOGIN_HEADLESS=true`: useful for unattended automation
+- `GOLOGIN_EXECUTABLE_PATH`: only when Orbita must be forced to a custom binary
+- `GOLOGIN_TMPDIR`: only when temp profile data should be stored elsewhere
+
+## Open Patterns
+
+Persistent profile:
+
+```bash
+gologin-local-agent-browser open https://example.com --profile profile_id --headless
+```
+
+Temporary profile:
+
+```bash
+gologin-local-agent-browser open https://example.com --headless
+```
+
+Temporary profile with Gologin proxy:
+
+```bash
+gologin-local-agent-browser open https://example.com --proxy-country us --headless
+```
+
+Temporary profile with custom proxy:
+
+```bash
+gologin-local-agent-browser open https://example.com \
+  --proxy-host 1.2.3.4 \
+  --proxy-port 8080 \
+  --proxy-mode http \
+  --proxy-user user \
+  --proxy-pass secret \
+  --headless
+```
+
+## Session Inspection
+
+- `snapshot` to get current actionable refs
+- `current` to inspect active session metadata
+- `sessions` to list all daemon-held sessions
+- `jobs` and `job` to inspect stored run or batch history
+
+## Persistence Rules
+
+- Use `--profile` for anything that should retain cookies, local storage, and browsing state.
+- End with `close` so the GoLogin SDK posts profile state back to storage.
+- Temporary profiles are disposable. Persistent profiles are for real warmup/login/account workflows.
+
+## Ref Discipline
+
+- Use refs exactly as returned, for example `@e4`.
+- After navigation, page refresh, login submit, modal changes, or DOM-heavy interactions, run `snapshot` again.
+- If a command says the snapshot is stale, stop using old refs immediately.
