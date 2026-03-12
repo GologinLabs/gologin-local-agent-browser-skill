@@ -57,15 +57,18 @@ It is built for:
 - ref-based page interaction after `snapshot`
 - screenshots, PDFs, uploads, and session inspection
 - reusable `run` and `batch` automations with local job history
+- remote plus local profile inspection and registry sync
+- tabs, cookies, storage, and eval helpers inside the same session
 
 ## Capabilities
 
+- Diagnostics with `doctor`
 - Session lifecycle with `open`, `close`, `sessions`, and `current`
 - Runbooks and batches with `run`, `batch`, `jobs`, and `job`
 - Snapshot-driven interaction with `snapshot`, `click`, `type`, and `fill`
 - Semantic actions with `find`
-- State helpers with `cookies`, `storage-export`, `storage-import`, and `eval`
-- Persistent profile management with `profiles`, `profile-create`, `profile-import`, and `profile-update`
+- State helpers with `tabs`, `cookies`, `storage-export`, `storage-import`, and `eval`
+- Persistent profile management with `profiles`, `profile`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, and `profile-delete`
 
 ## Setup
 
@@ -86,6 +89,8 @@ Optional environment variables:
 ## Quickstart
 
 ```bash
+gologin-local-agent-browser doctor --json
+gologin-local-agent-browser profiles --remote --json
 gologin-local-agent-browser open https://example.com --profile your_profile_id --headless
 gologin-local-agent-browser snapshot -i
 gologin-local-agent-browser click @e3

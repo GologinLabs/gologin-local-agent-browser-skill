@@ -23,7 +23,8 @@ Use the `gologin-local-agent-browser` CLI as the single interface for local GoLo
 - Do not switch to browser-use, Playwright, or agent-browser for the same task unless the user explicitly asks to avoid GoLogin.
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
 - Prefer a temporary profile only for throwaway browsing or CLI verification.
-- Use `--headless` for automation by default. Use `--headed` only when visual debugging is necessary.
+- Use `--headless` or `--background` for unattended automation by default.
+- Use `--headed` or `--visible` for visual debugging, warmup review, manual checkpoints, or login flows where the user may want to observe the browser.
 - Treat the latest `snapshot` as authoritative. After navigation or DOM-changing actions, run `snapshot` again before reusing refs.
 - Close the session with `close` when the task is done so GoLogin commits profile state back to storage.
 - Use this skill only for profiles, accounts, and websites the user is authorized to control.
@@ -73,10 +74,29 @@ Blocking preflight:
 Use these commands directly:
 
 - `open <url> [--profile <profileId>] [--session <sessionId>] [--idle-timeout-ms <ms>] [--headless|--background|--headed|--visible]`
+- `doctor [--json]`
 - `run <runbook.json> [--session <sessionId>] [--profile <profileId>] [--vars <variables.json>] [--name <jobName>] [--continue-on-error] [--json]`
 - `batch <runbook.json> --targets <targets.json> [--concurrency <n>] [--vars <variables.json>] [--name <jobName>] [--continue-on-error] [--json]`
 - `jobs [--kind <run|batch>] [--status <running|ok|partial|failed>] [--search <text>] [--limit <n>] [--json]`
 - `job <jobId> [--json]`
+- `profiles [--local|--remote|--all] [--platform <platform>] [--status <status>] [--tag <tag>] [--search <text>] [--json]`
+- `profile <profileId> [--local|--remote] [--json]`
+- `profile-create <name> [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>]`
+- `profile-import <profileId> [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>]`
+- `profile-update <profileId> [--name <name>] [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>] [--add-tags <a,b>] [--remove-tags <a,b>]`
+- `profile-sync <profileId> [--json]`
+- `profile-delete <profileId> [--remote]`
+- `tabs [--session <sessionId>]`
+- `tabopen [url] [--session <sessionId>]`
+- `tabfocus <index> [--session <sessionId>]`
+- `tabclose [index] [--session <sessionId>]`
+- `cookies [--session <sessionId>] [--output <path>] [--json]`
+- `cookies-import <cookies.json> [--session <sessionId>]`
+- `cookies-clear [--session <sessionId>]`
+- `storage-export [path] [--scope <local|session|both>] [--session <sessionId>] [--json]`
+- `storage-import <storage.json> [--scope <local|session|both>] [--clear] [--session <sessionId>]`
+- `storage-clear [--scope <local|session|both>] [--session <sessionId>]`
+- `eval <expression> [--json] [--session <sessionId>]`
 - `snapshot [--session <sessionId>] [--interactive|-i]`
 - `click <target> [--session <sessionId>]`
 - `dblclick <target> [--session <sessionId>]`
@@ -103,13 +123,15 @@ Use these commands directly:
 ## Operating Pattern
 
 1. After token preflight, confirm profile strategy if the user did not specify it: existing profile or new/imported profile.
-2. Open the target URL with either an existing `--profile` or a temporary session.
-3. Capture `snapshot`.
-4. Use the returned refs for deterministic actions.
-5. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
-6. Use `current` or `sessions` if session state is unclear.
-7. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
-8. End with `close`.
+2. If CLI or daemon health is unclear, use `doctor` before trying to improvise around failures.
+3. When the user wants an existing profile, prefer `profiles --remote` or `profiles --all` to inspect available GoLogin profiles. Use `profiles --local` only when the local registry itself is the subject.
+4. Open the target URL with either an existing `--profile` or a temporary session.
+5. Capture `snapshot`.
+6. Use the returned refs for deterministic actions.
+7. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
+8. Use `current`, `sessions`, `tabs`, `cookies`, `storage-export`, or `eval` when session state needs inspection rather than guessing from stale output.
+9. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
+10. End with `close`.
 
 ## Routing Guidance
 
@@ -119,6 +141,7 @@ Choose this skill first when:
 - the task depends on an existing profile, cookies, or session persistence
 - the user wants to warm accounts, collect cookies, or keep state between runs
 - the workflow should run across one or more local GoLogin profiles
+- the task needs local tabs, cookies, storage, or JavaScript evaluation inside the GoLogin session
 
 Choose a generic browser skill only when:
 
@@ -136,4 +159,7 @@ Choose a generic browser skill only when:
 
 - `snapshot` should be treated as the compact page model for the next step.
 - Action commands should be read as session-state updates, not verbose logs.
+- `doctor` should be read as install and daemon diagnostics, not as permission to bypass missing-token rules.
+- `profiles` defaults to remote-first behavior when a token is present. Use `--local`, `--remote`, or `--all` explicitly when the source matters.
+- `jobs` can finish with `ok`, `partial`, or `failed`; `partial` still means useful work was completed.
 - If a task depends on persistence, report the profile id and whether the session was closed cleanly.

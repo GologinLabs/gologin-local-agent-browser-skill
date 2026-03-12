@@ -19,15 +19,27 @@
     "snapshot",
     "runbook",
     "batch",
-    "job history"
+    "job history",
+    "doctor",
+    "tabs",
+    "cookies",
+    "storage",
+    "eval"
   ],
   "tool_groups": [
+    "diagnostics",
     "sessions",
     "automation",
     "artifacts",
-    "profiles"
+    "profiles",
+    "state"
   ],
   "tools": [
+    {
+      "name": "local_browser_doctor",
+      "group": "diagnostics",
+      "surface": "gologin-local-agent-browser doctor"
+    },
     {
       "name": "local_browser_open",
       "group": "sessions",
@@ -84,9 +96,54 @@
       "surface": "gologin-local-agent-browser profiles"
     },
     {
+      "name": "local_browser_profile",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profile"
+    },
+    {
       "name": "local_browser_profile_create",
       "group": "profiles",
       "surface": "gologin-local-agent-browser profile-create"
+    },
+    {
+      "name": "local_browser_profile_import",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profile-import"
+    },
+    {
+      "name": "local_browser_profile_update",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profile-update"
+    },
+    {
+      "name": "local_browser_profile_sync",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profile-sync"
+    },
+    {
+      "name": "local_browser_profile_delete",
+      "group": "profiles",
+      "surface": "gologin-local-agent-browser profile-delete"
+    },
+    {
+      "name": "local_browser_tabs",
+      "group": "state",
+      "surface": "gologin-local-agent-browser tabs"
+    },
+    {
+      "name": "local_browser_cookies",
+      "group": "state",
+      "surface": "gologin-local-agent-browser cookies"
+    },
+    {
+      "name": "local_browser_storage",
+      "group": "state",
+      "surface": "gologin-local-agent-browser storage-export"
+    },
+    {
+      "name": "local_browser_eval",
+      "group": "state",
+      "surface": "gologin-local-agent-browser eval"
     }
   ]
 }
