@@ -75,6 +75,7 @@ It is built for:
 - Semantic actions with `find`
 - State helpers with `tabs`, `cookies`, `storage-export`, `storage-import`, and `eval`
 - Persistent profile management with `profiles`, `profile`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, and `profile-delete`
+- Warmup campaigns as repeated short runbook sessions driven by the skill rather than one giant deterministic browser session
 
 ## Setup
 
@@ -102,6 +103,8 @@ gologin-local-agent-browser snapshot -i
 gologin-local-agent-browser click @e3
 gologin-local-agent-browser close
 ```
+
+For long warmup routines, prefer repeating a short runbook route with pauses between cycles instead of one huge session. See [`workflows/profile-warmup.md`](./workflows/profile-warmup.md).
 
 ## When To Use This Skill
 

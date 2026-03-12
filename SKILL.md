@@ -23,6 +23,7 @@ Use the `gologin-local-agent-browser` CLI as the single interface for local GoLo
 - Do not switch to browser-use, Playwright, or agent-browser for the same task unless the user explicitly asks to avoid GoLogin.
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
 - Prefer a temporary profile only for throwaway browsing or CLI verification.
+- For long warmup tasks, prefer a series of short runbook sessions with pauses between cycles rather than one giant deterministic session.
 - Use `--headless` or `--background` for unattended automation by default.
 - Use `--headed` or `--visible` for visual debugging, warmup review, manual checkpoints, or login flows where the user may want to observe the browser.
 - Treat the latest `snapshot` as authoritative. After navigation or DOM-changing actions, run `snapshot` again before reusing refs.
@@ -76,6 +77,7 @@ Use these commands directly:
 - `open <url> [--profile <profileId>] [--session <sessionId>] [--idle-timeout-ms <ms>] [--headless|--background|--headed|--visible]`
 - `doctor [--json]`
 - `run <runbook.json> [--session <sessionId>] [--profile <profileId>] [--vars <variables.json>] [--name <jobName>] [--continue-on-error] [--json]`
+- Warmup-oriented hidden `run` flags for skill use: `--repeat <n>`, `--duration-ms <ms>`, `--pause-min-ms <ms>`, `--pause-max-ms <ms>`
 - `batch <runbook.json> --targets <targets.json> [--concurrency <n>] [--vars <variables.json>] [--name <jobName>] [--continue-on-error] [--json]`
 - `jobs [--kind <run|batch>] [--status <running|ok|partial|failed>] [--search <text>] [--limit <n>] [--json]`
 - `job <jobId> [--json]`
@@ -125,13 +127,15 @@ Use these commands directly:
 1. After token preflight, confirm profile strategy if the user did not specify it: existing profile or new/imported profile.
 2. If CLI or daemon health is unclear, use `doctor` before trying to improvise around failures.
 3. When the user wants an existing profile, prefer `profiles --remote` or `profiles --all` to inspect available GoLogin profiles. Use `profiles --local` only when the local registry itself is the subject.
-4. Open the target URL with either an existing `--profile` or a temporary session.
-5. Capture `snapshot`.
-6. Use the returned refs for deterministic actions.
-7. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
-8. Use `current`, `sessions`, `tabs`, `cookies`, `storage-export`, or `eval` when session state needs inspection rather than guessing from stale output.
-9. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
-10. End with `close`.
+4. For long warmup work, encode one coherent 5-15 minute route in a runbook and repeat that route with `run --repeat ... --pause-min-ms ... --pause-max-ms ...` or `--duration-ms ...`.
+5. Inside warmup runbooks, prefer step-level `minDelayMs`, `maxDelayMs`, `retry`, and `retryBackoffMs` over hard-coded mechanical timing.
+6. Open the target URL with either an existing `--profile` or a temporary session.
+7. Capture `snapshot`.
+8. Use the returned refs for deterministic actions.
+9. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
+10. Use `current`, `sessions`, `tabs`, `cookies`, `storage-export`, or `eval` when session state needs inspection rather than guessing from stale output.
+11. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
+12. End with `close`.
 
 ## Routing Guidance
 
@@ -162,4 +166,5 @@ Choose a generic browser skill only when:
 - `doctor` should be read as install and daemon diagnostics, not as permission to bypass missing-token rules.
 - `profiles` defaults to remote-first behavior when a token is present. Use `--local`, `--remote`, or `--all` explicitly when the source matters.
 - `jobs` can finish with `ok`, `partial`, or `failed`; `partial` still means useful work was completed.
+- Repeated `run` jobs may also report `cycleCount` and `failedCycles` when the skill used hidden campaign-style loop flags.
 - If a task depends on persistence, report the profile id and whether the session was closed cleanly.

@@ -2,18 +2,22 @@
 
 Use this workflow when the goal is to make a persistent GoLogin profile browse a small set of real pages and accumulate normal session state.
 
+Treat warmup as a campaign of short coherent sessions, not one giant deterministic run.
+
 ## Recommended Flow
 
 1. Reuse an existing `--profile`.
-2. Open a relevant seed URL in headless mode unless visual debugging is needed.
-3. Capture `snapshot`.
-4. Perform a small number of realistic actions:
+2. Encode one coherent route in a runbook.
+3. Run that route for multiple cycles with `run --repeat` or `run --duration-ms`, plus pauses between cycles.
+4. Inside the runbook, open a relevant seed URL in headless mode unless visual debugging is needed.
+5. Capture `snapshot`.
+6. Perform a small number of realistic actions:
    - click one or two navigation links
    - scroll a few times
    - wait for visible text or page load
    - optionally open a second or third user-relevant page
-5. Re-snapshot after page-changing actions.
-6. End with `close`.
+7. Re-snapshot after page-changing actions.
+8. End each cycle with `close`.
 
 ## Good Defaults
 
@@ -21,21 +25,74 @@ Use this workflow when the goal is to make a persistent GoLogin profile browse a
 - Prefer site-relevant pages over random traffic.
 - Prefer a few coherent actions over noisy automation.
 - Keep waits explicit with `wait` when the page is dynamic.
+- Prefer `minDelayMs` and `maxDelayMs` on runbook steps instead of the exact same wait every time.
+- Prefer `retry` and `retryBackoffMs` on fragile steps such as clicks after navigation.
+- For multi-hour warmup, use many short cycles with pauses, not one multi-hour runbook.
 
-## Example
+## Example Runbook
+
+```json
+{
+  "steps": [
+    {
+      "command": "open",
+      "args": ["https://www.reddit.com"],
+      "flags": { "headless": true },
+      "minDelayMs": 800,
+      "maxDelayMs": 1800
+    },
+    {
+      "command": "snapshot",
+      "flags": { "interactive": true },
+      "minDelayMs": 600,
+      "maxDelayMs": 1400
+    },
+    {
+      "command": "click",
+      "args": ["@e5"],
+      "retry": 2,
+      "retryBackoffMs": 1200,
+      "minDelayMs": 700,
+      "maxDelayMs": 1500
+    },
+    {
+      "command": "snapshot",
+      "flags": { "interactive": true },
+      "minDelayMs": 600,
+      "maxDelayMs": 1400
+    },
+    {
+      "command": "scroll",
+      "args": ["down", 700],
+      "minDelayMs": 900,
+      "maxDelayMs": 2200
+    },
+    {
+      "command": "wait",
+      "args": [1500]
+    },
+    {
+      "command": "close",
+      "minDelayMs": 500,
+      "maxDelayMs": 1200
+    }
+  ]
+}
+```
+
+## Example Campaign
 
 ```bash
-gologin-local-agent-browser open https://www.reddit.com --profile profile_id --headless
-gologin-local-agent-browser snapshot -i
-gologin-local-agent-browser click @e5
-gologin-local-agent-browser snapshot -i
-gologin-local-agent-browser scroll down 700
-gologin-local-agent-browser wait 1500
-gologin-local-agent-browser close
+gologin-local-agent-browser run ./warmup-route.json \
+  --profile profile_id \
+  --repeat 12 \
+  --pause-min-ms 45000 \
+  --pause-max-ms 120000 \
+  --name warmup-campaign
 ```
 
 ## Avoid
 
 - Reusing stale refs after navigation.
-- Running aggressive loops without checking state.
+- Running one giant deterministic session for hours.
 - Leaving the profile open without a final `close`.

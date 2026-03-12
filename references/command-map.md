@@ -90,6 +90,31 @@ gologin-local-agent-browser open https://example.com \
 - `eval` for small in-page inspections
 - `jobs` and `job` to inspect stored run or batch history
 
+## Warmup Campaign Pattern
+
+- Use `run` for one route and treat long warmup as repeated short cycles.
+- Hidden skill-oriented `run` flags are available for this:
+  - `--repeat <n>`
+  - `--duration-ms <ms>`
+  - `--pause-min-ms <ms>`
+  - `--pause-max-ms <ms>`
+- Inside the runbook, use optional step fields:
+  - `minDelayMs`
+  - `maxDelayMs`
+  - `retry`
+  - `retryBackoffMs`
+- These controls are for skill workflows and internal runbooks. They do not need to be advertised as headline public CLI features.
+
+Example:
+
+```bash
+gologin-local-agent-browser run ./warmup-route.json \
+  --profile profile_id \
+  --repeat 8 \
+  --pause-min-ms 30000 \
+  --pause-max-ms 90000
+```
+
 ## Profile Management
 
 - `profile-create` for a new persistent GoLogin profile plus registry entry

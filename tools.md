@@ -81,7 +81,7 @@ gologin-local-agent-browser run ./examples/runbook-warmup.json --profile your_pr
 ```
 
 Use when:
-One reusable scenario should run against one session or profile.
+One reusable scenario should run against one session or profile. For long warmup, the skill may also use hidden campaign-style flags such as `--repeat`, `--duration-ms`, `--pause-min-ms`, and `--pause-max-ms` to repeat short sessions instead of creating one huge deterministic run.
 
 ## local_browser_batch
 
