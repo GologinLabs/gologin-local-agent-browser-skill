@@ -8,6 +8,12 @@ Install the skill with:
 npx skills add GologinLabs/gologin-local-agent-browser-skill
 ```
 
+Monorepo install:
+
+```bash
+npx skills add GologinLabs/agent-skills@gologin-local-agent-browser-skill
+```
+
 Standalone repo:
 
 - [GologinLabs/gologin-local-agent-browser-skill](https://github.com/GologinLabs/gologin-local-agent-browser-skill)
