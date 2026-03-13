@@ -93,6 +93,14 @@ Optional environment variables:
 - `GOLOGIN_EXECUTABLE_PATH`
 - `GOLOGIN_TMPDIR`
 
+Use `gologin-local-agent-browser doctor --json` when local startup is unclear. It now reports whether Orbita was auto-detected from the SDK cache, whether the executable exists, which paths were checked, and whether the reachable daemon belongs to the current checkout.
+
+For any new profile or proxy mutation, decide the proxy mode before continuing:
+
+- no proxy
+- GoLogin proxy by country with `--proxy-country <cc>`
+- custom proxy with `--proxy-host`, `--proxy-port`, and credentials
+
 ## Quickstart
 
 ```bash

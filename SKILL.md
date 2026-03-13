@@ -19,6 +19,8 @@ Use the `gologin-local-agent-browser` CLI as the single interface for local GoLo
 - Without a token, do not run `profiles`, `profile-*`, `open`, `sessions`, `current`, `run`, `batch`, `jobs`, `job`, `--help`, daemon probes, local config discovery, or Orbita-path discovery as fallback behavior.
 - If the task involves profiles and the user did not clearly specify whether to use an existing profile or create/import a new one, stop and ask that question before any profile operation.
 - Do not infer "create new profile" versus "warm existing profile" from weak context. Ask explicitly unless the user already made that choice.
+- If the task will create a new profile or change proxy settings on an existing one and the proxy plan is not explicit, stop and ask which proxy mode to use: no proxy, GoLogin proxy by country, or the user's own custom proxy.
+- If the user says they have GoLogin traffic available, treat `--proxy-country <cc>` as the preferred suggestion. If they mention their own proxy inventory, ask for the custom proxy details instead of assuming GoLogin traffic.
 - Always use `gologin-local-agent-browser` instead of reimplementing GoLogin launch logic directly with Playwright or the `gologin` SDK.
 - Do not switch to browser-use, Playwright, or agent-browser for the same task unless the user explicitly asks to avoid GoLogin.
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
@@ -61,7 +63,7 @@ Expect these environment variables:
 - `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN`
 - `GOLOGIN_PROFILE_ID` for a default persistent profile
 - `GOLOGIN_HEADLESS` for default headless mode
-- `GOLOGIN_EXECUTABLE_PATH` only if Orbita is not in the expected SDK location
+- `GOLOGIN_EXECUTABLE_PATH` only if `doctor` cannot find Orbita in the expected SDK cache or the user intentionally wants a custom binary
 - `GOLOGIN_TMPDIR` only if profile temp data should live in a custom directory
 
 Blocking preflight:
@@ -83,9 +85,9 @@ Use these commands directly:
 - `job <jobId> [--json]`
 - `profiles [--local|--remote|--all] [--platform <platform>] [--status <status>] [--tag <tag>] [--search <text>] [--json]`
 - `profile <profileId> [--local|--remote] [--json]`
-- `profile-create <name> [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>]`
+- `profile-create <name> [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>] [--proxy-country <country> | --proxy-host <host> --proxy-port <port>]`
 - `profile-import <profileId> [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>]`
-- `profile-update <profileId> [--name <name>] [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>] [--add-tags <a,b>] [--remove-tags <a,b>]`
+- `profile-update <profileId> [--name <name>] [--platform <platform>] [--account <label>] [--region <region>] [--status <status>] [--notes <notes>] [--tags <a,b>] [--add-tags <a,b>] [--remove-tags <a,b>] [--proxy-country <country> | --proxy-host <host> --proxy-port <port>]`
 - `profile-sync <profileId> [--json]`
 - `profile-delete <profileId> [--remote]`
 - `tabs [--session <sessionId>]`
@@ -125,17 +127,18 @@ Use these commands directly:
 ## Operating Pattern
 
 1. After token preflight, confirm profile strategy if the user did not specify it: existing profile or new/imported profile.
-2. If CLI or daemon health is unclear, use `doctor` before trying to improvise around failures.
-3. When the user wants an existing profile, prefer `profiles --remote` or `profiles --all` to inspect available GoLogin profiles. Use `profiles --local` only when the local registry itself is the subject.
-4. For long warmup work, encode one coherent 5-15 minute route in a runbook and repeat that route with `run --repeat ... --pause-min-ms ... --pause-max-ms ...` or `--duration-ms ...`.
-5. Inside warmup runbooks, prefer step-level `minDelayMs`, `maxDelayMs`, `retry`, and `retryBackoffMs` over hard-coded mechanical timing.
-6. Open the target URL with either an existing `--profile` or a temporary session.
-7. Capture `snapshot`.
-8. Use the returned refs for deterministic actions.
-9. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
-10. Use `current`, `sessions`, `tabs`, `cookies`, `storage-export`, or `eval` when session state needs inspection rather than guessing from stale output.
-11. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
-12. End with `close`.
+2. If the workflow needs a new profile or a proxy change, confirm proxy strategy before continuing: no proxy, GoLogin proxy by country, or custom proxy.
+3. If CLI or daemon health is unclear, use `doctor` before trying to improvise around failures.
+4. When the user wants an existing profile, prefer `profiles --remote` or `profiles --all` to inspect available GoLogin profiles. Use `profiles --local` only when the local registry itself is the subject.
+5. For long warmup work, encode one coherent 5-15 minute route in a runbook and repeat that route with `run --repeat ... --pause-min-ms ... --pause-max-ms ...` or `--duration-ms ...`.
+6. Inside warmup runbooks, prefer step-level `minDelayMs`, `maxDelayMs`, `retry`, and `retryBackoffMs` over hard-coded mechanical timing.
+7. Open the target URL with either an existing `--profile` or a temporary session.
+8. Capture `snapshot`.
+9. Use the returned refs for deterministic actions.
+10. After any mutating action, inspect whether refs may be stale and run `snapshot` again.
+11. Use `current`, `sessions`, `tabs`, `cookies`, `storage-export`, or `eval` when session state needs inspection rather than guessing from stale output.
+12. Save artifacts with `screenshot` or `pdf` when the task needs evidence or export.
+13. End with `close`.
 
 ## Routing Guidance
 

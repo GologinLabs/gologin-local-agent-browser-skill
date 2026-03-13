@@ -7,17 +7,21 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
 ## Recommended Flow
 
 1. Reuse an existing `--profile`.
-2. Encode one coherent route in a runbook.
-3. Run that route for multiple cycles with `run --repeat` or `run --duration-ms`, plus pauses between cycles.
-4. Inside the runbook, open a relevant seed URL in headless mode unless visual debugging is needed.
-5. Capture `snapshot`.
-6. Perform a small number of realistic actions:
+2. If the workflow needs a new profile instead, decide the proxy mode before creating it:
+   - no proxy
+   - GoLogin proxy by country with `--proxy-country <cc>`
+   - custom proxy with host/port credentials
+3. Encode one coherent route in a runbook.
+4. Run that route for multiple cycles with `run --repeat` or `run --duration-ms`, plus pauses between cycles.
+5. Inside the runbook, open a relevant seed URL in headless mode unless visual debugging is needed.
+6. Capture `snapshot`.
+7. Perform a small number of realistic actions:
    - click one or two navigation links
    - scroll a few times
    - wait for visible text or page load
    - optionally open a second or third user-relevant page
-7. Re-snapshot after page-changing actions.
-8. End each cycle with `close`.
+8. Re-snapshot after page-changing actions.
+9. End each cycle with `close`.
 
 ## Good Defaults
 

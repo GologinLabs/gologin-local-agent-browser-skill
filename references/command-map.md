@@ -32,6 +32,7 @@ node ./dist/cli.js <command> ...
 - Use `doctor` only when the user is explicitly debugging install or daemon behavior, or when token preflight has already been satisfied.
 - `GOLOGIN_PROFILE_ID` is optional. Only after a token exists may the skill list profiles, inspect registry state, or create/import a profile.
 - If the user did not specify profile strategy, stop and ask one explicit question first: use an existing profile, or create/import a new profile.
+- If a new profile or proxy mutation is needed and the proxy plan is unclear, stop and ask one explicit question first: no proxy, GoLogin proxy by country, or a custom proxy.
 - Do not auto-list profiles or auto-create a profile until that choice is clear.
 
 ## Environment
@@ -117,9 +118,9 @@ gologin-local-agent-browser run ./warmup-route.json \
 
 ## Profile Management
 
-- `profile-create` for a new persistent GoLogin profile plus registry entry
+- `profile-create` for a new persistent GoLogin profile plus registry entry. New profiles should normally use the same OS family as the current machine and the intended proxy mode from the very first session.
 - `profile-import` to bring an existing remote profile into the local registry
-- `profile-update` to edit local metadata such as platform, account label, notes, and tags
+- `profile-update` to edit local metadata such as platform, account label, notes, tags, and proxy configuration
 - `profile-sync` to synchronize local metadata with the remote GoLogin profile
 - `profile-delete [--remote]` to remove a local entry or also delete the remote profile
 
