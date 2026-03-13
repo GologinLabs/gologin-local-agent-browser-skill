@@ -30,6 +30,7 @@ Direct use of the `gologin` SDK is out of scope for this skill. If the user asks
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
 - Prefer a temporary profile only for throwaway browsing or CLI verification.
 - For long warmup tasks, prefer a series of short runbook sessions with pauses between cycles rather than one giant deterministic session.
+- For warmup campaigns that use `run --repeat` or `run --duration-ms`, expect the CLI to behave in campaign mode: it should prefer one stable session id for the route, continue past isolated step failures, and abort only the current cycle when the browser session is lost or a challenge page is detected.
 - Use `--headless` or `--background` for unattended automation by default.
 - Use `--headed` or `--visible` for visual debugging, warmup review, manual checkpoints, or login flows where the user may want to observe the browser.
 - Treat the latest `snapshot` as authoritative. After navigation or DOM-changing actions, run `snapshot` again before reusing refs.

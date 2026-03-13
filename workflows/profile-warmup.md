@@ -13,6 +13,7 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
    - custom proxy with host/port credentials
 3. Encode one coherent route in a runbook.
 4. Run that route for multiple cycles with `run --repeat` or `run --duration-ms`, plus pauses between cycles.
+   Repeated campaigns now default to a warmup-friendly error policy in the CLI: one failed site or one detected challenge should mark the cycle as partial instead of killing the whole campaign immediately.
 5. Inside the runbook, open a relevant seed URL in headless mode unless visual debugging is needed.
 6. Capture `snapshot`.
 7. Perform a small number of realistic actions:
@@ -28,6 +29,10 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
 - Prefer 2-5 pages, not dozens.
 - Prefer site-relevant pages over random traffic.
 - Prefer a few coherent actions over noisy automation.
+- Prefer a small multi-tab route for warmup-heavy sessions:
+  - first `open` one relevant page
+  - then `tabopen` one or two related pages
+  - then `tabfocus` and interact across those tabs instead of replacing the same page over and over
 - Keep waits explicit with `wait` when the page is dynamic.
 - Prefer `minDelayMs` and `maxDelayMs` on runbook steps instead of the exact same wait every time.
 - Prefer `retry` and `retryBackoffMs` on fragile steps such as clicks after navigation.
@@ -52,10 +57,20 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
       "maxDelayMs": 1400
     },
     {
-      "command": "click",
-      "args": ["@e5"],
-      "retry": 2,
-      "retryBackoffMs": 1200,
+      "command": "tabopen",
+      "args": ["https://www.reddit.com/r/Porsche/"],
+      "minDelayMs": 700,
+      "maxDelayMs": 1600
+    },
+    {
+      "command": "tabfocus",
+      "args": [1],
+      "minDelayMs": 600,
+      "maxDelayMs": 1200
+    },
+    {
+      "command": "scroll",
+      "args": ["down", 700],
       "minDelayMs": 700,
       "maxDelayMs": 1500
     },
@@ -66,8 +81,8 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
       "maxDelayMs": 1400
     },
     {
-      "command": "scroll",
-      "args": ["down", 700],
+      "command": "tabfocus",
+      "args": [0],
       "minDelayMs": 900,
       "maxDelayMs": 2200
     },
