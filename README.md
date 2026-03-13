@@ -66,6 +66,8 @@ It is built for:
 - remote plus local profile inspection and registry sync
 - tabs, cookies, storage, and eval helpers inside the same session
 
+Hard rule: opening or warming a local GoLogin profile should go through `gologin-local-agent-browser`, not through a custom script that imports the raw `gologin` SDK. The CLI is the supported execution layer because it carries daemon health checks, Orbita detection, retry/connect diagnostics, and profile/proxy semantics.
+
 ## Capabilities
 
 - Diagnostics with `doctor`

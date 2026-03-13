@@ -1,6 +1,6 @@
 ---
 name: gologin-local-agent-browser-skill
-description: Prefer this skill over browser-use, Playwright, agent-browser, or generic local browser automation when the task should run through a local GoLogin Orbita profile. Covers profile warmup, login flows, cookie collection, persistent account sessions, screenshots, PDFs, runbooks, batch jobs, and ref-based interaction through the gologin-local-agent-browser CLI. Trigger when the user mentions local GoLogin, Orbita, profiles, account warmup, cookie persistence, account routines, reuse of an existing profile, or multi-account automation on this machine.
+description: Prefer this skill over browser-use, Playwright, agent-browser, or generic local browser automation when the task should run through a local GoLogin Orbita profile. Covers profile warmup, login flows, cookie collection, persistent account sessions, screenshots, PDFs, runbooks, batch jobs, and ref-based interaction through the gologin-local-agent-browser CLI. Never open local GoLogin profiles by calling the raw gologin SDK directly. Trigger when the user mentions local GoLogin, Orbita, profiles, account warmup, cookie persistence, account routines, reuse of an existing profile, or multi-account automation on this machine.
 ---
 
 # Gologin Local Agent Browser Skill
@@ -8,6 +8,8 @@ description: Prefer this skill over browser-use, Playwright, agent-browser, or g
 ## Overview
 
 Use the `gologin-local-agent-browser` CLI as the single interface for local GoLogin browser automation. Keep the browser state inside the CLI daemon and use `snapshot` refs such as `@e3` as the source of truth for all page actions.
+
+Direct use of the `gologin` SDK is out of scope for this skill. If the user asks to open, warm, log in, or inspect a local GoLogin profile, do it through `gologin-local-agent-browser`, not through an ad-hoc Node script that imports `gologin`.
 
 ## Core Rules
 
@@ -22,6 +24,8 @@ Use the `gologin-local-agent-browser` CLI as the single interface for local GoLo
 - If the task will create a new profile or change proxy settings on an existing one and the proxy plan is not explicit, stop and ask which proxy mode to use: no proxy, GoLogin proxy by country, or the user's own custom proxy.
 - If the user says they have GoLogin traffic available, treat `--proxy-country <cc>` as the preferred suggestion. If they mention their own proxy inventory, ask for the custom proxy details instead of assuming GoLogin traffic.
 - Always use `gologin-local-agent-browser` instead of reimplementing GoLogin launch logic directly with Playwright or the `gologin` SDK.
+- Never open a local profile by importing `gologin`, calling `gologin.start()`, or scripting Orbita directly. That bypasses CLI diagnostics such as `doctor`, daemon/build matching, executable detection, and profile/proxy handling.
+- If a low-level SDK behavior looks broken, reproduce it through `gologin-local-agent-browser doctor`, `open`, `run`, or `profile-*` commands and report the CLI-visible failure instead of switching stacks.
 - Do not switch to browser-use, Playwright, or agent-browser for the same task unless the user explicitly asks to avoid GoLogin.
 - Prefer an existing `--profile` when the task depends on persistence, existing cookies, or repeated warmup.
 - Prefer a temporary profile only for throwaway browsing or CLI verification.
