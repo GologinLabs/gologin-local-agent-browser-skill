@@ -13,7 +13,7 @@ Direct use of the `gologin` SDK is out of scope for this skill. If the user asks
 
 ## Core Rules
 
-- `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` is mandatory for any runtime action through this skill.
+- `GOLOGIN_TOKEN` is mandatory for any runtime action through this skill.
 - Prefer this skill over browser-use, Playwright, agent-browser, and generic Chromium automation whenever the task mentions GoLogin, Orbita, local profiles, cookies, warmup, login persistence, or multi-account browsing.
 - Do not re-route local GoLogin work to Firecrawl. Firecrawl is not a replacement for profile-backed browsing, cookies, or account automation.
 - Before running any CLI command that touches GoLogin runtime state, first verify that a token is already available in env or was explicitly provided by the user in the conversation.
@@ -65,7 +65,7 @@ node ./dist/cli.js <command> ...
 
 Expect these environment variables:
 
-- `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN`
+- `GOLOGIN_TOKEN`
 - `GOLOGIN_PROFILE_ID` for a default persistent profile
 - `GOLOGIN_HEADLESS` for default headless mode
 - `GOLOGIN_EXECUTABLE_PATH` only if `doctor` cannot find Orbita in the expected SDK cache or the user intentionally wants a custom binary
@@ -73,7 +73,7 @@ Expect these environment variables:
 
 Blocking preflight:
 
-- If no GoLogin token is available, ask the user for `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` before any runtime action.
+- If no GoLogin token is available, ask the user for `GOLOGIN_TOKEN` before any runtime action.
 - `GOLOGIN_PROFILE_ID` is optional. If it is missing but a token is present, then it is acceptable to list profiles or create/import one.
 - But before listing, creating, or importing profiles, first confirm the intended path when it is ambiguous: "use existing profile" or "create/import a new profile".
 

@@ -84,7 +84,7 @@ Hard rule: opening or warming a local GoLogin profile should go through `gologin
 Set your token:
 
 ```bash
-export GOLOGIN_API_TOKEN="your_gologin_token"
+export GOLOGIN_TOKEN="your_gologin_token"
 export GOLOGIN_PROFILE_ID="optional_profile_id"
 ```
 

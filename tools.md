@@ -7,27 +7,27 @@ This skill wraps the `gologin-local-agent-browser` CLI and its daemon-backed loc
 | Skill tool | CLI command | Requires | Returns |
 | --- | --- | --- | --- |
 | `local_browser_doctor` | `doctor` | local install, token strongly preferred for runtime checks | Daemon and config diagnostics |
-| `local_browser_open` | `open` | `GOLOGIN_API_TOKEN` | Session summary |
-| `local_browser_snapshot` | `snapshot` | `GOLOGIN_API_TOKEN` | Snapshot with refs |
-| `local_browser_click` | `click` | `GOLOGIN_API_TOKEN` | Action status |
-| `local_browser_type` | `type` | `GOLOGIN_API_TOKEN` | Action status |
-| `local_browser_run` | `run` | `GOLOGIN_API_TOKEN` | Runbook job record |
-| `local_browser_batch` | `batch` | `GOLOGIN_API_TOKEN` | Batch job record |
+| `local_browser_open` | `open` | `GOLOGIN_TOKEN` | Session summary |
+| `local_browser_snapshot` | `snapshot` | `GOLOGIN_TOKEN` | Snapshot with refs |
+| `local_browser_click` | `click` | `GOLOGIN_TOKEN` | Action status |
+| `local_browser_type` | `type` | `GOLOGIN_TOKEN` | Action status |
+| `local_browser_run` | `run` | `GOLOGIN_TOKEN` | Runbook job record |
+| `local_browser_batch` | `batch` | `GOLOGIN_TOKEN` | Batch job record |
 | `local_browser_jobs` | `jobs` | none beyond local state | Job list |
 | `local_browser_job` | `job` | none beyond local state | Job detail |
-| `local_browser_screenshot` | `screenshot` | `GOLOGIN_API_TOKEN` | Screenshot path |
-| `local_browser_pdf` | `pdf` | `GOLOGIN_API_TOKEN` | PDF path |
-| `local_browser_profiles` | `profiles` | `GOLOGIN_API_TOKEN` | Remote, local, or combined profile list |
-| `local_browser_profile` | `profile` | `GOLOGIN_API_TOKEN` | One profile detail |
-| `local_browser_profile_create` | `profile-create` | `GOLOGIN_API_TOKEN` | Created profile summary |
-| `local_browser_profile_import` | `profile-import` | `GOLOGIN_API_TOKEN` | Imported registry record |
-| `local_browser_profile_update` | `profile-update` | `GOLOGIN_API_TOKEN` | Updated registry record |
-| `local_browser_profile_sync` | `profile-sync` | `GOLOGIN_API_TOKEN` | Synced local and remote summary |
-| `local_browser_profile_delete` | `profile-delete` | `GOLOGIN_API_TOKEN` | Delete result |
-| `local_browser_tabs` | `tabs` | `GOLOGIN_API_TOKEN` | Current tab inventory |
-| `local_browser_cookies` | `cookies` | `GOLOGIN_API_TOKEN` | Cookies JSON or export path |
-| `local_browser_storage` | `storage-export` | `GOLOGIN_API_TOKEN` | Local/session storage dump |
-| `local_browser_eval` | `eval` | `GOLOGIN_API_TOKEN` | Evaluated JavaScript result |
+| `local_browser_screenshot` | `screenshot` | `GOLOGIN_TOKEN` | Screenshot path |
+| `local_browser_pdf` | `pdf` | `GOLOGIN_TOKEN` | PDF path |
+| `local_browser_profiles` | `profiles` | `GOLOGIN_TOKEN` | Remote, local, or combined profile list |
+| `local_browser_profile` | `profile` | `GOLOGIN_TOKEN` | One profile detail |
+| `local_browser_profile_create` | `profile-create` | `GOLOGIN_TOKEN` | Created profile summary |
+| `local_browser_profile_import` | `profile-import` | `GOLOGIN_TOKEN` | Imported registry record |
+| `local_browser_profile_update` | `profile-update` | `GOLOGIN_TOKEN` | Updated registry record |
+| `local_browser_profile_sync` | `profile-sync` | `GOLOGIN_TOKEN` | Synced local and remote summary |
+| `local_browser_profile_delete` | `profile-delete` | `GOLOGIN_TOKEN` | Delete result |
+| `local_browser_tabs` | `tabs` | `GOLOGIN_TOKEN` | Current tab inventory |
+| `local_browser_cookies` | `cookies` | `GOLOGIN_TOKEN` | Cookies JSON or export path |
+| `local_browser_storage` | `storage-export` | `GOLOGIN_TOKEN` | Local/session storage dump |
+| `local_browser_eval` | `eval` | `GOLOGIN_TOKEN` | Evaluated JavaScript result |
 
 ## local_browser_doctor
 

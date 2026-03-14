@@ -26,7 +26,7 @@ node ./dist/cli.js <command> ...
 
 ## Blocking Preflight
 
-- Before any runtime command, confirm that `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN` is available.
+- Before any runtime command, confirm that `GOLOGIN_TOKEN` is available.
 - If the token is missing, stop and ask the user for it.
 - Do not probe `profiles`, `sessions`, `current`, daemon state, local config files, Orbita paths, or CLI `--help` as a workaround for a missing token.
 - Use `doctor` only when the user is explicitly debugging install or daemon behavior, or when token preflight has already been satisfied.
@@ -37,7 +37,7 @@ node ./dist/cli.js <command> ...
 
 ## Environment
 
-- `GOLOGIN_TOKEN` or `GOLOGIN_API_TOKEN`: required
+- `GOLOGIN_TOKEN`: required
 - `GOLOGIN_PROFILE_ID`: optional default profile
 - `GOLOGIN_HEADLESS=true`: useful for unattended automation
 - `GOLOGIN_EXECUTABLE_PATH`: only when Orbita must be forced to a custom binary
