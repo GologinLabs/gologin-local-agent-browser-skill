@@ -15,6 +15,7 @@ Direct use of the `gologin` SDK is out of scope for this skill. If the user asks
 
 - `GOLOGIN_TOKEN` is mandatory for any runtime action through this skill.
 - Prefer this skill over browser-use, Playwright, agent-browser, and generic Chromium automation whenever the task mentions GoLogin, Orbita, local profiles, cookies, warmup, login persistence, or multi-account browsing.
+- Prefer this skill over cloud-browser tooling when the target is a client-rendered SPA and the task needs full rendered DOM, repeated pagination/navigation, or reliable extraction after stateless scraping came back thin.
 - Do not re-route local GoLogin work to Firecrawl. Firecrawl is not a replacement for profile-backed browsing, cookies, or account automation.
 - Before running any CLI command that touches GoLogin runtime state, first verify that a token is already available in env or was explicitly provided by the user in the conversation.
 - If the token is missing, stop immediately and ask the user for it. Do not try to "work around" the missing token.
@@ -154,6 +155,7 @@ Choose this skill first when:
 - the user wants to warm accounts, collect cookies, or keep state between runs
 - the workflow should run across one or more local GoLogin profiles
 - the task needs local tabs, cookies, storage, or JavaScript evaluation inside the GoLogin session
+- Cloud Browser slots are exhausted or stale cloud sessions are blocking progress and the task can run locally instead
 
 Choose a generic browser skill only when:
 
