@@ -68,6 +68,21 @@ It is built for:
 
 Hard rule: opening or warming a local GoLogin profile should go through `gologin-local-agent-browser`, not through a custom script that imports the raw `gologin` SDK. The CLI is the supported execution layer because it carries daemon health checks, Orbita detection, retry/connect diagnostics, and profile/proxy semantics.
 
+## Mandatory Preflight
+
+Before profile work starts, classify the request with four questions:
+
+1. What is the use case: `linkedin`, `ads`, `smm`, `scraping`, `geo`, or another persistent account workflow?
+2. Should this use an existing profile or create/import a new one?
+3. Should the profile use no proxy, a GoLogin country proxy, or a custom proxy?
+4. Should the first run be visible for review, or unattended in the background?
+
+Then use:
+
+- `profile-create --template <use-case>` for new profiles
+- `doctor --use-case <use-case> --check-proxy <profileId>` before login, warmup, or geo-sensitive work
+- short repeated runbooks instead of one giant deterministic session
+
 ## Capabilities
 
 - Diagnostics with `doctor`
@@ -78,6 +93,7 @@ Hard rule: opening or warming a local GoLogin profile should go through `gologin
 - State helpers with `tabs`, `cookies`, `storage-export`, `storage-import`, and `eval`
 - Persistent profile management with `profiles`, `profile`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, and `profile-delete`
 - Warmup campaigns as repeated short runbook sessions driven by the skill rather than one giant deterministic browser session
+- Use-case templates and diagnostics for `linkedin`, `ads`, `smm`, `scraping`, and `geo`
 
 ## Setup
 
@@ -102,6 +118,22 @@ For any new profile or proxy mutation, decide the proxy mode before continuing:
 - no proxy
 - GoLogin proxy by country with `--proxy-country <cc>`
 - custom proxy with `--proxy-host`, `--proxy-port`, and credentials
+
+## Use-Case Quickstart
+
+```bash
+gologin-local-agent-browser profile-create "LinkedIn SDR 01" --template linkedin --proxy-country us
+gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+
+gologin-local-agent-browser profile-create "FB Buyer 01" --template ads --proxy-country us
+gologin-local-agent-browser doctor --use-case ads --check-proxy your_profile_id
+
+gologin-local-agent-browser profile-create "Brand SMM" --template smm --proxy-country gb
+gologin-local-agent-browser doctor --use-case smm --check-proxy your_profile_id
+
+gologin-local-agent-browser profile-create "Rendered scraper" --template scraping
+gologin-local-agent-browser doctor --use-case scraping
+```
 
 ## Quickstart
 
@@ -129,4 +161,5 @@ Use this skill when:
 
 - [`SKILL.md`](./SKILL.md)
 - [`references/command-map.md`](./references/command-map.md)
+- [`references/preflight.md`](./references/preflight.md)
 - [`workflows/`](./workflows)

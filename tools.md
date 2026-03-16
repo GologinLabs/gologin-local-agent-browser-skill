@@ -32,11 +32,11 @@ This skill wraps the `gologin-local-agent-browser` CLI and its daemon-backed loc
 ## local_browser_doctor
 
 ```bash
-gologin-local-agent-browser doctor --json
+gologin-local-agent-browser doctor --json --use-case linkedin --check-proxy your_profile_id
 ```
 
 Use when:
-Daemon reachability, config resolution, or local CLI health must be inspected before guessing.
+Daemon reachability, config resolution, or local CLI health must be inspected before guessing. Add `--use-case` when the user is doing LinkedIn, ads, SMM, scraping, or geo-sensitive work so the report can include workflow-specific risk checks.
 
 ## local_browser_open
 
@@ -131,11 +131,11 @@ One profile should be inspected in detail.
 ## local_browser_profile_create
 
 ```bash
-gologin-local-agent-browser profile-create "reddit-main" --platform reddit --account user1
+gologin-local-agent-browser profile-create "linkedin-main" --template linkedin --proxy-country us
 ```
 
 Use when:
-A new persistent GoLogin profile should be created and tracked.
+A new persistent GoLogin profile should be created and tracked. Prefer `--template` for `linkedin`, `ads`, `smm`, `scraping`, and `geo` instead of hand-rolling local metadata.
 
 ## local_browser_profile_import
 
@@ -149,11 +149,11 @@ An existing remote GoLogin profile should be added to the local registry with me
 ## local_browser_profile_update
 
 ```bash
-gologin-local-agent-browser profile-update 69b05c486375d47ab0f12630 --notes "Warmup finished" --add-tags warmed
+gologin-local-agent-browser profile-update 69b05c486375d47ab0f12630 --template smm --add-tags warmed
 ```
 
 Use when:
-Local profile metadata should be edited.
+Local profile metadata should be edited or realigned to a workflow template without bypassing the CLI.
 
 ## local_browser_profile_sync
 

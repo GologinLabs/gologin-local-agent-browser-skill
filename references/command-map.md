@@ -34,6 +34,8 @@ node ./dist/cli.js <command> ...
 - If the user did not specify profile strategy, stop and ask one explicit question first: use an existing profile, or create/import a new profile.
 - If a new profile or proxy mutation is needed and the proxy plan is unclear, stop and ask one explicit question first: no proxy, GoLogin proxy by country, or a custom proxy.
 - Do not auto-list profiles or auto-create a profile until that choice is clear.
+- If the use case is not obvious, classify it first: `linkedin`, `ads`, `smm`, `scraping`, `geo`, or other.
+- For `linkedin`, `ads`, `smm`, and `geo`, treat proxy choice as blocking setup rather than optional cleanup.
 
 ## Environment
 
@@ -78,6 +80,8 @@ gologin-local-agent-browser open https://example.com \
 ## Session Inspection
 
 - `doctor` to inspect daemon, config, and transport health
+- `doctor --use-case <linkedin|ads|facebook|smm|scraping|geo>` to add use-case-specific guidance
+- `doctor --check-proxy <profileId>` to compare local and remote proxy state for one profile
 - `profiles --remote` to inspect remote GoLogin profiles
 - `profiles --local` to inspect only the local registry
 - `profiles --all` to combine both sources
@@ -118,9 +122,9 @@ gologin-local-agent-browser run ./warmup-route.json \
 
 ## Profile Management
 
-- `profile-create` for a new persistent GoLogin profile plus registry entry. New profiles should normally use the same OS family as the current machine and the intended proxy mode from the very first session.
+- `profile-create --template <linkedin|ads|facebook|smm|scraping|geo>` for a new persistent GoLogin profile plus sane metadata defaults for the selected workflow. New profiles should normally use the same OS family as the current machine and the intended proxy mode from the very first session.
 - `profile-import` to bring an existing remote profile into the local registry
-- `profile-update` to edit local metadata such as platform, account label, notes, tags, and proxy configuration
+- `profile-update --template <linkedin|ads|facebook|smm|scraping|geo>` to realign local metadata and tags for an existing registry profile
 - `profile-sync` to synchronize local metadata with the remote GoLogin profile
 - `profile-delete [--remote]` to remove a local entry or also delete the remote profile
 
