@@ -1,8 +1,8 @@
-# Profile Warmup
+# Profile Preparation
 
 Use this workflow when the goal is to make a persistent GoLogin profile browse a small set of real pages and accumulate normal session state.
 
-Treat warmup as a campaign of short coherent sessions, not one giant deterministic run.
+Treat profile preparation as a campaign of short coherent sessions, not one giant deterministic run.
 
 ## Recommended Flow
 
@@ -13,7 +13,7 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
    - custom proxy with host/port credentials
 3. Encode one coherent route in a runbook.
 4. Run that route for multiple cycles with `run --repeat` or `run --duration-ms`, plus pauses between cycles.
-   Repeated campaigns now default to a warmup-friendly error policy in the CLI: one failed site or one detected challenge should mark the cycle as partial instead of killing the whole campaign immediately.
+   Repeated campaigns now default to a profile-preparation-friendly error policy in the CLI: one failed site or one detected challenge should mark the cycle as partial instead of killing the whole campaign immediately.
 5. Inside the runbook, open a relevant seed URL in headless mode unless visual debugging is needed.
 6. Capture `snapshot`.
 7. Perform a small number of realistic actions:
@@ -29,14 +29,14 @@ Treat warmup as a campaign of short coherent sessions, not one giant determinist
 - Prefer 2-5 pages, not dozens.
 - Prefer site-relevant pages over random traffic.
 - Prefer a few coherent actions over noisy automation.
-- Prefer a small multi-tab route for warmup-heavy sessions:
+- Prefer a small multi-tab route for preparation-heavy sessions:
   - first `open` one relevant page
   - then `tabopen` one or two related pages
   - then `tabfocus` and interact across those tabs instead of replacing the same page over and over
 - Keep waits explicit with `wait` when the page is dynamic.
 - Prefer `minDelayMs` and `maxDelayMs` on runbook steps instead of the exact same wait every time.
 - Prefer `retry` and `retryBackoffMs` on fragile steps such as clicks after navigation.
-- For multi-hour warmup, use many short cycles with pauses, not one multi-hour runbook.
+- For multi-hour preparation, use many short cycles with pauses, not one multi-hour runbook.
 
 ## Example Runbook
 
@@ -107,7 +107,7 @@ gologin-local-agent-browser run ./warmup-route.json \
   --repeat 12 \
   --pause-min-ms 45000 \
   --pause-max-ms 120000 \
-  --name warmup-campaign
+  --name preparation-campaign
 ```
 
 ## Avoid
