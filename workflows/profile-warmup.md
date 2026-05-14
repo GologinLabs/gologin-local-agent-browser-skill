@@ -102,7 +102,7 @@ Treat profile preparation as a campaign of short coherent sessions, not one gian
 ## Example Campaign
 
 ```bash
-gologin-local-agent-browser run ./warmup-route.json \
+gologin-agent-browser --runtime local run ./warmup-route.json \
   --profile profile_id \
   --repeat 12 \
   --pause-min-ms 45000 \

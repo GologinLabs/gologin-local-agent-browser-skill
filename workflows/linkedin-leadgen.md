@@ -9,14 +9,14 @@ Use this workflow for SDR, recruiter, founder-led outbound, or candidate-sourcin
 3. Create or align the profile:
 
 ```bash
-gologin-local-agent-browser profile-create "LinkedIn SDR 01" --template linkedin --proxy-country us
-gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+gologin-agent-browser --runtime local profile-create "LinkedIn SDR 01" --template linkedin --proxy-country us
+gologin-agent-browser --runtime local doctor --use-case linkedin --check-proxy your_profile_id
 ```
 
 4. Prefer a visible first run for login and checkpoint review:
 
 ```bash
-gologin-local-agent-browser open https://www.linkedin.com --profile your_profile_id --visible
+gologin-agent-browser --runtime local open https://www.linkedin.com --profile your_profile_id --visible
 ```
 
 5. After login, warm with short repeated routes rather than a single marathon session.

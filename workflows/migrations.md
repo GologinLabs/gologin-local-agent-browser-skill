@@ -13,14 +13,14 @@ Use this when the user is moving from Multilogin, Dolphin, AdsPower, or ad-hoc s
 3. Stamp the workflow with a local template:
 
 ```bash
-gologin-local-agent-browser profile-import existing_remote_profile_id
-gologin-local-agent-browser profile-update existing_remote_profile_id --template ads
+gologin-agent-browser --runtime local profile-import existing_remote_profile_id
+gologin-agent-browser --runtime local profile-update existing_remote_profile_id --template ads
 ```
 
 4. Verify local runtime and proxy alignment:
 
 ```bash
-gologin-local-agent-browser doctor --use-case ads --check-proxy existing_remote_profile_id
+gologin-agent-browser --runtime local doctor --use-case ads --check-proxy existing_remote_profile_id
 ```
 
 ## Mapping Heuristics

@@ -5,20 +5,20 @@
 Use the globally installed command:
 
 ```bash
-gologin-local-agent-browser <command> ...
+gologin-agent-browser --runtime local <command> ...
 ```
 
 If it is not installed yet:
 
 ```bash
-npm install -g gologin-local-agent-browser-cli
+npm install -g gologin-agent-browser-cli
 ```
 
 If you want to run from a source checkout:
 
 ```bash
 git clone https://github.com/GologinLabs/gologin-local-agent-browser.git
-cd gologin-local-agent-browser
+cd gologin-agent-browser --runtime local
 npm install
 npm run build
 node ./dist/cli.js <command> ...
@@ -50,25 +50,25 @@ node ./dist/cli.js <command> ...
 Persistent profile:
 
 ```bash
-gologin-local-agent-browser open https://example.com --profile profile_id --headless
+gologin-agent-browser --runtime local open https://example.com --profile profile_id --headless
 ```
 
 Temporary profile:
 
 ```bash
-gologin-local-agent-browser open https://example.com --headless
+gologin-agent-browser --runtime local open https://example.com --headless
 ```
 
 Temporary profile with Gologin proxy:
 
 ```bash
-gologin-local-agent-browser open https://example.com --proxy-country us --headless
+gologin-agent-browser --runtime local open https://example.com --proxy-country us --headless
 ```
 
 Temporary profile with custom proxy:
 
 ```bash
-gologin-local-agent-browser open https://example.com \
+gologin-agent-browser --runtime local open https://example.com \
   --proxy-host 1.2.3.4 \
   --proxy-port 8080 \
   --proxy-mode http \
@@ -113,7 +113,7 @@ gologin-local-agent-browser open https://example.com \
 Example:
 
 ```bash
-gologin-local-agent-browser run ./warmup-route.json \
+gologin-agent-browser --runtime local run ./warmup-route.json \
   --profile profile_id \
   --repeat 8 \
   --pause-min-ms 30000 \

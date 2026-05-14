@@ -8,7 +8,7 @@ Use this when the user reports captcha, bans, forced logouts, session loss, or u
 2. Run:
 
 ```bash
-gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+gologin-agent-browser --runtime local doctor --use-case linkedin --check-proxy your_profile_id
 ```
 
 Replace the use case as needed.

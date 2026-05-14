@@ -17,14 +17,14 @@ Use this workflow when the user wants a persistent profile to log into a site an
 ## Example
 
 ```bash
-gologin-local-agent-browser open https://example.com/login --profile profile_id --headless
-gologin-local-agent-browser snapshot -i
-gologin-local-agent-browser type @e7 "username"
-gologin-local-agent-browser type @e8 "password"
-gologin-local-agent-browser press Enter
-gologin-local-agent-browser wait --url "/dashboard"
-gologin-local-agent-browser screenshot ./artifacts/login-proof.png
-gologin-local-agent-browser close
+gologin-agent-browser --runtime local open https://example.com/login --profile profile_id --headless
+gologin-agent-browser --runtime local snapshot -i
+gologin-agent-browser --runtime local type @e7 "username"
+gologin-agent-browser --runtime local type @e8 "password"
+gologin-agent-browser --runtime local press Enter
+gologin-agent-browser --runtime local wait --url "/dashboard"
+gologin-agent-browser --runtime local screenshot ./artifacts/login-proof.png
+gologin-agent-browser --runtime local close
 ```
 
 ## Cookie Persistence Notes

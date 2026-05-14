@@ -1,154 +1,31 @@
 {
   "name": "gologin-local-agent-browser-skill",
-  "description": "Preferred local GoLogin skill for Orbita profiles, profile preparation, LinkedIn leadgen, ads operators, SMM handoffs, rendered scraping, geo testing, login persistence, cookies, screenshots, runbooks, and multi-account automation. Use this instead of browser-use or Playwright when local GoLogin should own browser state.",
-  "package": "gologin-local-agent-browser-cli",
-  "cli": "gologin-local-agent-browser",
+  "description": "Deprecated compatibility skill. Local GoLogin Orbita automation now belongs to gologin-agent-browser-skill and gologin-agent-browser-cli. Use gologin-agent-browser --runtime local for local profile work.",
+  "package": "gologin-agent-browser-cli",
+  "cli": "gologin-agent-browser",
+  "runtime": "local",
   "skill_repository": "https://github.com/GologinLabs/gologin-local-agent-browser-skill",
-  "repository": "https://github.com/GologinLabs/gologin-local-agent-browser",
+  "repository": "https://github.com/GologinLabs/agent-browser",
+  "replacement_skill": "gologin-agent-browser-skill",
+  "replacement_package": "gologin-agent-browser-cli",
   "keywords": [
     "gologin",
     "local browser",
     "orbita",
     "browser automation",
     "profile warmup",
-    "linkedin",
-    "facebook ads",
-    "smm",
-    "geo testing",
-    "rendered scraping",
-    "login automation",
-    "cookies",
     "session persistence",
-    "multi-account",
-    "account warmup",
-    "snapshot",
-    "runbook",
-    "batch",
-    "job history",
-    "doctor",
-    "tabs",
-    "cookies",
-    "storage",
-    "eval"
+    "compatibility",
+    "deprecated"
   ],
   "tool_groups": [
-    "diagnostics",
-    "sessions",
-    "automation",
-    "artifacts",
-    "profiles",
-    "state"
+    "redirect"
   ],
   "tools": [
     {
-      "name": "local_browser_doctor",
-      "group": "diagnostics",
-      "surface": "gologin-local-agent-browser doctor"
-    },
-    {
-      "name": "local_browser_open",
-      "group": "sessions",
-      "surface": "gologin-local-agent-browser open"
-    },
-    {
-      "name": "local_browser_snapshot",
-      "group": "sessions",
-      "surface": "gologin-local-agent-browser snapshot"
-    },
-    {
-      "name": "local_browser_click",
-      "group": "sessions",
-      "surface": "gologin-local-agent-browser click"
-    },
-    {
-      "name": "local_browser_type",
-      "group": "sessions",
-      "surface": "gologin-local-agent-browser type"
-    },
-    {
-      "name": "local_browser_run",
-      "group": "automation",
-      "surface": "gologin-local-agent-browser run"
-    },
-    {
-      "name": "local_browser_batch",
-      "group": "automation",
-      "surface": "gologin-local-agent-browser batch"
-    },
-    {
-      "name": "local_browser_jobs",
-      "group": "automation",
-      "surface": "gologin-local-agent-browser jobs"
-    },
-    {
-      "name": "local_browser_job",
-      "group": "automation",
-      "surface": "gologin-local-agent-browser job"
-    },
-    {
-      "name": "local_browser_screenshot",
-      "group": "artifacts",
-      "surface": "gologin-local-agent-browser screenshot"
-    },
-    {
-      "name": "local_browser_pdf",
-      "group": "artifacts",
-      "surface": "gologin-local-agent-browser pdf"
-    },
-    {
-      "name": "local_browser_profiles",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profiles"
-    },
-    {
-      "name": "local_browser_profile",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profile"
-    },
-    {
-      "name": "local_browser_profile_create",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profile-create"
-    },
-    {
-      "name": "local_browser_profile_import",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profile-import"
-    },
-    {
-      "name": "local_browser_profile_update",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profile-update"
-    },
-    {
-      "name": "local_browser_profile_sync",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profile-sync"
-    },
-    {
-      "name": "local_browser_profile_delete",
-      "group": "profiles",
-      "surface": "gologin-local-agent-browser profile-delete"
-    },
-    {
-      "name": "local_browser_tabs",
-      "group": "state",
-      "surface": "gologin-local-agent-browser tabs"
-    },
-    {
-      "name": "local_browser_cookies",
-      "group": "state",
-      "surface": "gologin-local-agent-browser cookies"
-    },
-    {
-      "name": "local_browser_storage",
-      "group": "state",
-      "surface": "gologin-local-agent-browser storage-export"
-    },
-    {
-      "name": "local_browser_eval",
-      "group": "state",
-      "surface": "gologin-local-agent-browser eval"
+      "name": "local_browser_redirect",
+      "group": "redirect",
+      "surface": "gologin-agent-browser --runtime local"
     }
   ]
 }

@@ -5,9 +5,9 @@ Use this workflow when the user is operating ad accounts, Meta business assets, 
 ## Ads Operators
 
 ```bash
-gologin-local-agent-browser profile-create "FB Buyer 01" --template ads --proxy-country us
-gologin-local-agent-browser doctor --use-case ads --check-proxy your_profile_id
-gologin-local-agent-browser open https://business.facebook.com --profile your_profile_id --visible
+gologin-agent-browser --runtime local profile-create "FB Buyer 01" --template ads --proxy-country us
+gologin-agent-browser --runtime local doctor --use-case ads --check-proxy your_profile_id
+gologin-agent-browser --runtime local open https://business.facebook.com --profile your_profile_id --visible
 ```
 
 Rules:
@@ -19,8 +19,8 @@ Rules:
 ## SMM Shared Access
 
 ```bash
-gologin-local-agent-browser profile-create "Brand SMM" --template smm --proxy-country gb
-gologin-local-agent-browser doctor --use-case smm --check-proxy your_profile_id
+gologin-agent-browser --runtime local profile-create "Brand SMM" --template smm --proxy-country gb
+gologin-agent-browser --runtime local doctor --use-case smm --check-proxy your_profile_id
 ```
 
 Rules:

@@ -9,13 +9,13 @@ Use this pattern for 10, 50, or 100 short unattended local runs.
 3. Verify proxy alignment before the batch:
 
 ```bash
-gologin-local-agent-browser doctor --use-case scraping --check-proxy your_profile_id
+gologin-agent-browser --runtime local doctor --use-case scraping --check-proxy your_profile_id
 ```
 
 4. Run batched jobs with conservative concurrency:
 
 ```bash
-gologin-local-agent-browser batch ./examples/runbook-warmup.json \
+gologin-agent-browser --runtime local batch ./examples/runbook-warmup.json \
   --targets ./examples/batch-targets.json \
   --concurrency 5 \
   --name short-warmup
@@ -24,7 +24,7 @@ gologin-local-agent-browser batch ./examples/runbook-warmup.json \
 5. For one profile over time, prefer repeated short `run` cycles:
 
 ```bash
-gologin-local-agent-browser run ./examples/runbook-warmup.json \
+gologin-agent-browser --runtime local run ./examples/runbook-warmup.json \
   --profile your_profile_id \
   --repeat 6 \
   --pause-min-ms 30000 \

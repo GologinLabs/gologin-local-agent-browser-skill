@@ -20,18 +20,18 @@ Use this workflow for a persistent Reddit profile where the user wants login, li
 ## Example
 
 ```bash
-gologin-local-agent-browser open https://www.reddit.com/login --profile profile_id --headless
-gologin-local-agent-browser snapshot -i
-gologin-local-agent-browser type @e7 "username"
-gologin-local-agent-browser type @e8 "password"
-gologin-local-agent-browser press Enter
-gologin-local-agent-browser wait --text "Home"
-gologin-local-agent-browser snapshot -i
-gologin-local-agent-browser click @e12
-gologin-local-agent-browser snapshot -i
-gologin-local-agent-browser scroll down 900
-gologin-local-agent-browser wait 1200
-gologin-local-agent-browser close
+gologin-agent-browser --runtime local open https://www.reddit.com/login --profile profile_id --headless
+gologin-agent-browser --runtime local snapshot -i
+gologin-agent-browser --runtime local type @e7 "username"
+gologin-agent-browser --runtime local type @e8 "password"
+gologin-agent-browser --runtime local press Enter
+gologin-agent-browser --runtime local wait --text "Home"
+gologin-agent-browser --runtime local snapshot -i
+gologin-agent-browser --runtime local click @e12
+gologin-agent-browser --runtime local snapshot -i
+gologin-agent-browser --runtime local scroll down 900
+gologin-agent-browser --runtime local wait 1200
+gologin-agent-browser --runtime local close
 ```
 
 ## Notes
